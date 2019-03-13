@@ -14,7 +14,7 @@ def setup_vscode():
             executable,
             '--no-auth',
             '--allow-http',
-            '--port ' + str(port),
+            '--port=' + str(port),
             #working_dir
         ]
         print('Running', ' '.join(cmd),  file=open("/tmp/log.log", "w"))
