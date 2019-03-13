@@ -9,20 +9,16 @@ def setup_vscode():
             raise FileNotFoundError('Can not find code-server in PATH')
 
         working_dir = os.getenv("REPO_DIR", ".")
-        print('Running', ' '.join([
-            executable,
-            '--no-auth',
-            '--allow-http',
-            '--port ' + str(port),
-            working_dir
-        ]),  file=open("/tmp/log.log", "w"))
-        return [
+
+        cmd = [
             executable,
             '--no-auth',
             '--allow-http',
             '--port ' + str(port),
             working_dir
         ]
+        print('Running', ' '.join(cmd),  file=open("/tmp/log.log", "w"))
+        return cmd
 
     return {
         'command': _get_vscode_cmd,
