@@ -23,6 +23,8 @@ def setup_vscode():
         'command': _get_vscode_cmd,
         'launcher_entry': {
             'title': 'VS Code',
-            'icon_path': os.path.join(os.path.dirname(os.path.abspath(__file__)), 'icons', 'vscode.svg')
+            'icon_path': os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                      'icons',
+                                      'vscode.svg')
         }
-}
+    }

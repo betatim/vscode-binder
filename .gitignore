@@ -1,0 +1,11 @@
+.npm
+.yarn
+.cache
+.wget-hsts
+.rnd
+.config
+.local
+*.egg-info
+.jupyter
+.bash_logout
+.profile

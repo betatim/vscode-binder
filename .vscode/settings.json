@@ -1,0 +1,12 @@
+{
+    "files.exclude": {
+        "**/.bashrc": true,
+        "**/.cache": true,
+        "**/.config": true,
+        "**/.jupyter": true,
+        "**/.local": true,
+        "**/.npm": true,
+        "**/.yarn": true,
+        "**/jupyter_vscode_proxy.egg-info": true
+    }
+}
