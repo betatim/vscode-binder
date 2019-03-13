@@ -1,3 +1,7 @@
+import os
+import shutil
+
+
 def setup_vscode():
     def _get_vscode_cmd(port):
         executable = 'code-server'
