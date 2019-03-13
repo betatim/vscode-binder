@@ -6,3 +6,5 @@ wget https://github.com/codercom/code-server/releases/download/1.32.0-245/code-s
 tar xzf code-server-1.32.0-245-linux-x64.tar.gz
 mkdir -p ~/.local/bin
 mv code-server-1.32.0-245-linux-x64/code-server ~/.local/bin/
+
+pip install -e.
