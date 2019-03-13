@@ -20,7 +20,7 @@ def setup_vscode():
             executable,
             '--no-auth',
             '--allow-http',
-            '--port' + str(port),
+            '--port ' + str(port),
             working_dir
         ]
 
