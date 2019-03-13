@@ -15,7 +15,7 @@ def setup_vscode():
             '--allow-http',
             '--port' + str(port),
             working_dir
-        ]))
+        ]),  file=open("/tmp/log.log"))
         return [
             executable,
             '--no-auth',
