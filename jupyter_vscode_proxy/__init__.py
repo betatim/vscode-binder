@@ -21,6 +21,7 @@ def setup_vscode():
 
     return {
         'command': _get_vscode_cmd,
+        'timeout': 20,
         'launcher_entry': {
             'title': 'VS Code',
             'icon_path': os.path.join(os.path.dirname(os.path.abspath(__file__)),
