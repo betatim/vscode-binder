@@ -8,7 +8,9 @@ def setup_vscode():
         if not shutil.which(executable):
             raise FileNotFoundError('Can not find code-server in PATH')
 
-        working_dir = os.getenv("REPO_DIR", ".")
+        working_dir = os.getenv("CODE_WORKINGDIR", None)
+        if working_dir is None:
+            working_dir = os.getenv("REPO_DIR", ".")
 
         cmd = [
             executable,
