@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Jupyter Server Proxy must be installed with pip. 
+pip install jupyter-server-proxy
+
 # Enable the proxy extension in notebook and lab
 jupyter serverextension enable --py jupyter_server_proxy
 jupyter labextension install jupyterlab-server-proxy
