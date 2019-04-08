@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pip install https://github.com/jupyterhub/jupyter-server-proxy/archive/7ac0125.zip
+
 # Enable the proxy extension in notebook and lab
 jupyter serverextension enable --py jupyter_server_proxy
 jupyter labextension install jupyterlab-server-proxy
