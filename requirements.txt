@@ -1,3 +1,2 @@
 numpy
-jupyter-server-proxy
 jupyterlab>0.34.9
