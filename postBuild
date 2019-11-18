@@ -13,5 +13,9 @@ mkdir -p ~/.local/bin
 tar -xvf code-server.tar.gz -C ~/.local/bin --strip-components=1
 rm -rf code-server.tar.gz
 
+wget https://github.com/microsoft/vscode-python/releases/download/2019.10.44104/ms-python-release.vsix
+code-server --install-extension ms-python-release.vsix
+rm -rf ms-python-release.vsix
+
 # Install the VS code proxy
 pip install -e.
