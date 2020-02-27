@@ -1,0 +1,7 @@
+channels:
+  - conda-forge
+dependencies:
+  - numpy
+  - jupyter-server-proxy
+  - "jupyterlab >0.34.9"
+  - code-server
