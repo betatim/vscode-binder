@@ -35,6 +35,7 @@ def setup_vscode():
     return {
         "command": _get_vscode_cmd,
         "timeout": 20,
+        "new_browser_tab": True,
         "launcher_entry": {
             "title": "VS Code",
             "icon_path": os.path.join(
