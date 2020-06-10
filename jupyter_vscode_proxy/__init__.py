@@ -7,10 +7,11 @@ def setup_vscode():
         executable = "code-server"
         if not shutil.which(executable):
             raise FileNotFoundError("Can not find code-server in PATH")
-
-        working_dir = os.getenv("CODE_WORKINGDIR", None)
-        if working_dir is None:
-            working_dir = os.getenv("REPO_DIR", ".")
+        
+        # Start vscode in CODE_WORKINGDIR env variable if set
+        # If not, start in 'current directory', which is $REPO_DIR in mybinder
+        # but /home/jovyan (or equivalent) in JupyterHubs
+        working_dir = os.getenv("CODE_WORKINGDIR", ".")
 
         extensions_dir = os.getenv("CODE_EXTENSIONSDIR", None)
         extra_extensions_dir = os.getenv("CODE_EXTRA_EXTENSIONSDIR", None)
