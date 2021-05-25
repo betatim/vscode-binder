@@ -1,4 +1,0 @@
-#!/bin/bash
-
-#export CODE_WORKINGDIR=${REPO_DIR}/examples
-exec "$@"
