@@ -14,8 +14,6 @@ def setup_vscode():
         working_dir = os.getenv("CODE_WORKINGDIR", ".")
 
         extensions_dir = os.getenv("CODE_EXTENSIONSDIR", None)
-        extra_extensions_dir = os.getenv("CODE_EXTRA_EXTENSIONSDIR", None)
-
         cmd = [
             executable,
             "--auth",
@@ -27,15 +25,12 @@ def setup_vscode():
         if extensions_dir:
             cmd += ["--extensions-dir", extensions_dir]
 
-        if extra_extensions_dir:
-            cmd += ["--extra-extensions-dir", extra_extensions_dir]
-
         cmd.append(working_dir)
         return cmd
 
     return {
         "command": _get_vscode_cmd,
-        "timeout": 20,
+        "timeout": 300,
         "new_browser_tab": True,
         "launcher_entry": {
             "title": "VS Code",
