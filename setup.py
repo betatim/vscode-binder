@@ -7,7 +7,7 @@ with open("README.md", encoding="utf8") as f:
 
 setuptools.setup(
     name="jupyter-vscode-proxy",
-    version="0.1",
+    version="0.2",
     url="https://github.com/betatim/vscode-binder",
     author="Tim Head",
     license="BSD",
