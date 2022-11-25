@@ -1,5 +1,5 @@
 name: Build and upload to PyPI
-on: [push]
+on: [push, release]
 
 jobs:
   build_artifacts:
