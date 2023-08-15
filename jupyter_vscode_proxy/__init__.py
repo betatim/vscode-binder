@@ -4,7 +4,7 @@ import os
 import shutil
 
 
-def _get_vscode_cmd() -> List[str]:
+def _get_inner_vscode_cmd() -> List[str]:
     return [
         "code-server",
         "--auth",
@@ -13,7 +13,7 @@ def _get_vscode_cmd() -> List[str]:
     ]
 
 
-def _get_openvscode_cmd() -> List[str]:
+def _get_inner_openvscode_cmd() -> List[str]:
     return [
         "openvscode-server",
         "--without-connection-token",
@@ -21,17 +21,17 @@ def _get_openvscode_cmd() -> List[str]:
     ]
 
 
-_CODE_EXECUTABLE_CMD_MAP: Dict[str, Callable] = {
-    "code-server": _get_vscode_cmd,
-    "openvscode-server": _get_openvscode_cmd,
+_CODE_EXECUTABLE_INNER_CMD_MAP: Dict[str, Callable] = {
+    "code-server": _get_inner_vscode_cmd,
+    "openvscode-server": _get_inner_openvscode_cmd,
 }
 
 
 def _get_cmd_factory(executable: str) -> Callable:
-    if executable not in _CODE_EXECUTABLE_CMD_MAP:
-        raise KeyError(f"'{executable}' is not one of {_CODE_EXECUTABLE_CMD_MAP.keys()}.")
+    if executable not in _CODE_EXECUTABLE_INNER_CMD_MAP:
+        raise KeyError(f"'{executable}' is not one of {_CODE_EXECUTABLE_INNER_CMD_MAP.keys()}.")
     
-    get_cmd = _CODE_EXECUTABLE_CMD_MAP[executable]
+    get_inner_cmd = _CODE_EXECUTABLE_INNER_CMD_MAP[executable]
 
     def _get_cmd(port: int) -> List[str]:
         if not shutil.which(executable):
@@ -44,7 +44,7 @@ def _get_cmd_factory(executable: str) -> Callable:
 
         extensions_dir = os.getenv("CODE_EXTENSIONSDIR", None)
 
-        cmd = get_cmd()
+        cmd = get_inner_cmd()
 
         cmd.append("--port=" + str(port))
 
