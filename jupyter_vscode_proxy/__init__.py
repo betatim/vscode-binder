@@ -27,9 +27,17 @@ def _get_vscode_cmd(port):
     return cmd
 
 
+_CODE_EXECUTABLE_CMD_MAP = {
+    "code-server": _get_vscode_cmd,
+}
+
+
 def setup_vscode():
+    executable = os.environ.get("CODE_EXECUTABLE", "code-server")
+    if executable not in _CODE_EXECUTABLE_CMD_MAP:
+        raise KeyError(f"'{executable}' is not one of {_CODE_EXECUTABLE_CMD_MAP.keys()}.")
     return {
-        "command": _get_vscode_cmd,
+        "command": _CODE_EXECUTABLE_CMD_MAP[executable],
         "timeout": 300,
         "new_browser_tab": True,
         "launcher_entry": {
