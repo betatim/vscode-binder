@@ -1,52 +1,22 @@
 import os
 import shutil
 
-def _get_vscode_cmd(port):
-    executable = "code-server"
-    if not shutil.which(executable):
-        raise FileNotFoundError("Can not find code-server in PATH")
-    
-    # Start vscode in CODE_WORKINGDIR env variable if set
-    # If not, start in 'current directory', which is $REPO_DIR in mybinder
-    # but /home/jovyan (or equivalent) in JupyterHubs
-    working_dir = os.getenv("CODE_WORKINGDIR", ".")
 
-    extensions_dir = os.getenv("CODE_EXTENSIONSDIR", None)
-    cmd = [
-        executable,
+def _get_vscode_cmd():
+    return [
+        "code-server",
         "--auth",
         "none",
         "--disable-telemetry",
-        "--port=" + str(port),
     ]
 
-    if extensions_dir:
-        cmd += ["--extensions-dir", extensions_dir]
 
-    cmd.append(working_dir)
-    return cmd
-
-
-def _get_openvscode_cmd(port):
-    executable = "openvscode-server"
-    if not shutil.which(executable):
-        raise FileNotFoundError("Can not find openvscode-server in PATH")
-
-    cmd = [
-        executable,
+def _get_openvscode_cmd():
+    return [
+        "openvscode-server",
         "--without-connection-token",
         "--telemetry-level off",
-        "--port=" + str(port),
     ]
-
-    if (extensions_dir := os.getenv("CODE_EXTENSIONSDIR", None)):
-        cmd += ["--extensions-dir", extensions_dir]
-
-    # Start openvscode in CODE_WORKINGDIR env variable if set
-    # If not, start in 'current directory'.
-    working_dir = os.getenv("CODE_WORKINGDIR", ".")
-    cmd.append(working_dir)
-    return cmd
 
 
 _CODE_EXECUTABLE_CMD_MAP = {
@@ -55,12 +25,40 @@ _CODE_EXECUTABLE_CMD_MAP = {
 }
 
 
-def setup_vscode():
-    executable = os.environ.get("CODE_EXECUTABLE", "code-server")
+def _get_cmd_factory(executable):
     if executable not in _CODE_EXECUTABLE_CMD_MAP:
         raise KeyError(f"'{executable}' is not one of {_CODE_EXECUTABLE_CMD_MAP.keys()}.")
+    
+    get_cmd = _CODE_EXECUTABLE_CMD_MAP[executable]
+
+    def _get_cmd(port):
+        if not shutil.which(executable):
+            raise FileNotFoundError(f"Can not find {executable} in PATH")
+        
+        # Start vscode in CODE_WORKINGDIR env variable if set
+        # If not, start in 'current directory', which is $REPO_DIR in mybinder
+        # but /home/jovyan (or equivalent) in JupyterHubs
+        working_dir = os.getenv("CODE_WORKINGDIR", ".")
+
+        extensions_dir = os.getenv("CODE_EXTENSIONSDIR", None)
+
+        cmd = get_cmd()
+
+        cmd.append("--port=" + str(port))
+
+        if extensions_dir:
+            cmd += ["--extensions-dir", extensions_dir]
+
+        cmd.append(working_dir)
+        return cmd
+
+    return _get_cmd
+
+
+def setup_vscode():
+    executable = os.environ.get("CODE_EXECUTABLE", "code-server")
     return {
-        "command": _CODE_EXECUTABLE_CMD_MAP[executable],
+        "command": _get_cmd_factory(executable),
         "timeout": 300,
         "new_browser_tab": True,
         "launcher_entry": {
