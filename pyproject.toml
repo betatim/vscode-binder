@@ -1,3 +1,34 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm", "wheel"]
+
+[tool.setuptools_scm]
+version_scheme = "post-release"
+
+[project]
+name = "jupyter_vscode_proxy"
+description = "VS Code extension for Jupyter"
+readme = "README.md"
+dynamic = ["version"]
+authors = [
+  {name = "Tim Head", email = "noreply@example.com"},
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Framework :: Juypter",
+]
+requires-python = ">=3.8"
+license = {text = "BSD-3-clause"}
+
+[project.urls]
+repository = "https://github.com/betatim/vscode-binder"
+
+[project.entry-points.jupyter_serverproxy_servers]
+vscode = "jupyter_vscode_proxy:setup_vscode"
+
 [tool.black]
 exclude = '''
 /(
