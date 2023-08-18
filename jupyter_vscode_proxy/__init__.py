@@ -17,7 +17,8 @@ def _get_inner_openvscode_cmd() -> List[str]:
     return [
         "openvscode-server",
         "--without-connection-token",
-        "--telemetry-level off",
+        "--telemetry-level",
+        "off",
     ]
 
 
