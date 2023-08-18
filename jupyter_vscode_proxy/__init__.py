@@ -1,7 +1,6 @@
-from typing import Callable, List, Dict, Any
-
 import os
 import shutil
+from typing import Any, Callable, Dict, List
 
 
 def _get_inner_vscode_cmd() -> List[str]:
@@ -30,14 +29,16 @@ _CODE_EXECUTABLE_INNER_CMD_MAP: Dict[str, Callable] = {
 
 def _get_cmd_factory(executable: str) -> Callable:
     if executable not in _CODE_EXECUTABLE_INNER_CMD_MAP:
-        raise KeyError(f"'{executable}' is not one of {_CODE_EXECUTABLE_INNER_CMD_MAP.keys()}.")
-    
+        raise KeyError(
+            f"'{executable}' is not one of {_CODE_EXECUTABLE_INNER_CMD_MAP.keys()}."
+        )
+
     get_inner_cmd = _CODE_EXECUTABLE_INNER_CMD_MAP[executable]
 
     def _get_cmd(port: int) -> List[str]:
         if not shutil.which(executable):
             raise FileNotFoundError(f"Can not find {executable} in PATH")
-        
+
         # Start vscode in CODE_WORKINGDIR env variable if set
         # If not, start in 'current directory', which is $REPO_DIR in mybinder
         # but /home/jovyan (or equivalent) in JupyterHubs
