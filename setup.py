@@ -1,6 +1,5 @@
 import setuptools
 
-
 with open("README.md", encoding="utf8") as f:
     readme = f.read()
 
@@ -17,11 +16,11 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     keywords=["Jupyter", "vscode", "vs code", "editor"],
     classifiers=["Framework :: Jupyter"],
-    install_requires=[
-        'jupyter-server-proxy'
-    ],
+    install_requires=["jupyter-server-proxy"],
     entry_points={
-        "jupyter_serverproxy_servers": ["vscode = jupyter_vscode_proxy:setup_vscode",]
+        "jupyter_serverproxy_servers": [
+            "vscode = jupyter_vscode_proxy:setup_vscode",
+        ]
     },
     package_data={"jupyter_vscode_proxy": ["icons/*"]},
     project_urls={

@@ -1,0 +1,23 @@
+[tool.black]
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+known_first_party = "{{ project_slug }}"
+skip_glob = '\.eggs/*,\.git/*,\.venv/*,build/*,dist/*'
+default_section = 'THIRDPARTY'
+
+[tool.mypy]
+python_version = '3.8'
+ignore_missing_imports = true
+no_implicit_optional = true
+check_untyped_defs = true
