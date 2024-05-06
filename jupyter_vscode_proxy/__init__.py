@@ -61,8 +61,7 @@ def _get_cmd_factory(executable: str) -> Callable:
 
 def setup_vscode() -> Dict[str, Any]:
     executable = os.environ.get("CODE_EXECUTABLE", "code-server")
-    use_code_server_icon = os.environ.get("USE_CODE_SERVER_ICON", "false").lower()
-    icon = "code-server.svg" if use_code_server_icon == "true" else "vscode.svg"
+    icon = "code-server.svg" if executable == "code-server" else "vscode.svg"
     return {
         "command": _get_cmd_factory(executable),
         "timeout": 300,
