@@ -61,6 +61,7 @@ def _get_cmd_factory(executable: str) -> Callable:
 
 def setup_vscode() -> Dict[str, Any]:
     executable = os.environ.get("CODE_EXECUTABLE", "code-server")
+    icon = "code-server.svg" if executable == "code-server" else "vscode.svg"
     return {
         "command": _get_cmd_factory(executable),
         "timeout": 300,
@@ -68,7 +69,7 @@ def setup_vscode() -> Dict[str, Any]:
         "launcher_entry": {
             "title": "VS Code",
             "icon_path": os.path.join(
-                os.path.dirname(os.path.abspath(__file__)), "icons", "vscode.svg"
+                os.path.dirname(os.path.abspath(__file__)), "icons", icon
             ),
         },
     }
