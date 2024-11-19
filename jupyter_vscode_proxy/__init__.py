@@ -24,6 +24,8 @@ def _get_inner_openvscode_cmd() -> List[str]:
 _CODE_EXECUTABLE_INNER_CMD_MAP: Dict[str, Callable] = {
     "code-server": _get_inner_vscode_cmd,
     "openvscode-server": _get_inner_openvscode_cmd,
+    # `none` if for the case when code-server is already running and listening
+    "none": lambda: []
 }
 
 
@@ -32,6 +34,12 @@ def _get_cmd_factory(executable: str) -> Callable:
         raise KeyError(
             f"'{executable}' is not one of {_CODE_EXECUTABLE_INNER_CMD_MAP.keys()}."
         )
+
+    if executable == "none":
+        if not (os.environ.get('CODE_PRESTARTED_PORT') or os.environ.get('CODE_PRESTARTED_SOCKET')):
+            raise EnvironmentError(
+                'Either `CODE_PRESTARTED_PORT` or `CODE_PRESTARTED_SOCKET` must be set if `CODE_EXECUTABLE` is "none"')
+        return lambda _: []
 
     get_inner_cmd = _CODE_EXECUTABLE_INNER_CMD_MAP[executable]
 
@@ -62,7 +70,7 @@ def _get_cmd_factory(executable: str) -> Callable:
 def setup_vscode() -> Dict[str, Any]:
     executable = os.environ.get("CODE_EXECUTABLE", "code-server")
     icon = "code-server.svg" if executable == "code-server" else "vscode.svg"
-    return {
+    proxy_config_dict = {
         "command": _get_cmd_factory(executable),
         "timeout": 300,
         "new_browser_tab": True,
@@ -73,3 +81,20 @@ def setup_vscode() -> Dict[str, Any]:
             ),
         },
     }
+
+    if executable == "none":
+        code_port = os.environ.get('CODE_PRESTARTED_PORT')
+        if code_port:
+            proxy_config_dict.update({
+                "port": int(code_port)
+                })
+            return proxy_config_dict
+
+        code_socket = os.environ.get('CODE_PRESTARTED_SOCKET')
+        if code_socket:
+            proxy_config_dict.update({
+                "unix_socket": code_socket
+                })
+            return proxy_config_dict
+    
+    return proxy_config_dict
