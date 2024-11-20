@@ -75,6 +75,8 @@ def setup_vscode() -> Dict[str, Any]:
         "timeout": 300,
         "new_browser_tab": True,
         "launcher_entry": {
+            # Option to disable launcher, e.g. for users that are not supposed to have editor available
+            "enabled": False if os.environ.get('CODE_LAUNCHER_DISABLED') else True,
             "title": "VS Code",
             "icon_path": os.path.join(
                 os.path.dirname(os.path.abspath(__file__)), "icons", icon

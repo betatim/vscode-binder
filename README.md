@@ -22,3 +22,9 @@ To use pre-started code-server:
 
 If none of these environment variables are set, jupyter-code-server starts new code-server process and proxies
 requests to its socket.
+
+## Enable/disable launcher
+By default code-server launcher is enabled and visible in JupyterLab. Option `CODE_LAUNCHER_DISABLED`
+may be set to any non-empty value to disable launcher. This is useful when e.g. certain users are not supposed
+to have code-server available in Jupyterhub as there is no easy way to disable loading of entire `jupyter-vscode-proxy`
+module for these users if module is for example built into Docker image.
