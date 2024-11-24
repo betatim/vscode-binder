@@ -1,7 +1,7 @@
 # VS Code on Binder
 
 [![PyPI](https://img.shields.io/pypi/v/jupyter-vscode-proxy)](https://pypi.org/project/jupyter-vscode-proxy/)
-[![Install with conda](https://anaconda.org/conda-forge/jupyter-vscode-proxy/badges/installer/conda.svg)](https://github.com/conda-forge/jupyter-vscode-proxy-feedstock)
+[![Install with conda](https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Conda_logo.svg/92px-Conda_logo.svg.png)](https://github.com/conda-forge/jupyter-vscode-proxy-feedstock)
 
 VS Code on Binder, because sometimes you need a real editor.
 
