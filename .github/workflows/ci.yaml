@@ -23,7 +23,7 @@ jobs:
       - shell: bash -el {0}
         run:
           python -m build
-      - uses: pypa/gh-action-pypi-publish@v1.12.3
+      - uses: pypa/gh-action-pypi-publish@v1.12.4
         if: github.event_name == 'release'
         with:
           user: __token__
