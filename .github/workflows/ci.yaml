@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Fetch full git history
         run: git fetch --prune --unshallow
       - name: Set up Conda env
