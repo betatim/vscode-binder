@@ -31,7 +31,7 @@ def _should_use_socket() -> bool:
     """Check if Unix socket should be used based on environment variable."""
     use_socket_env = os.getenv("JUPYTER_VSCODE_PROXY_USE_SOCKET", "false")
     # Use socket only if env var is set to something other than "no" or "false"
-    return use_socket_env.lower() not in ("no", "false")
+    return use_socket_env.lower() not in ("no", "false", "0")
 
 
 def _get_cmd_factory(executable: str) -> Callable:
