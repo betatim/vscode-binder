@@ -27,6 +27,13 @@ _CODE_EXECUTABLE_INNER_CMD_MAP: Dict[str, Callable] = {
 }
 
 
+def _should_use_socket() -> bool:
+    """Check if Unix socket should be used based on environment variable."""
+    use_socket_env = os.getenv("JUPYTER_VSCODE_PROXY_USE_SOCKET", "false")
+    # Use socket only if env var is set to something other than "no" or "false"
+    return use_socket_env.lower() not in ("no", "false", "0")
+
+
 def _get_cmd_factory(executable: str) -> Callable:
     if executable not in _CODE_EXECUTABLE_INNER_CMD_MAP:
         raise KeyError(
@@ -35,7 +42,7 @@ def _get_cmd_factory(executable: str) -> Callable:
 
     get_inner_cmd = _CODE_EXECUTABLE_INNER_CMD_MAP[executable]
 
-    def _get_cmd(port: int) -> List[str]:
+    def _get_cmd(port: int, unix_socket: str) -> List[str]:
         if not shutil.which(executable):
             raise FileNotFoundError(f"Can not find {executable} in PATH")
 
@@ -48,7 +55,12 @@ def _get_cmd_factory(executable: str) -> Callable:
 
         cmd = get_inner_cmd()
 
-        cmd.append("--port=" + str(port))
+        if unix_socket:
+            # Use Unix socket
+            cmd.extend(["--socket", "{unix_socket}", "--socket-mode", "0600"])
+        else:
+            # Use TCP port as usual
+            cmd.append("--port={port}")
 
         if extensions_dir:
             cmd += ["--extensions-dir", extensions_dir]
@@ -62,7 +74,8 @@ def _get_cmd_factory(executable: str) -> Callable:
 def setup_vscode() -> Dict[str, Any]:
     executable = os.environ.get("CODE_EXECUTABLE", "code-server")
     icon = "code-server.svg" if executable == "code-server" else "vscode.svg"
-    return {
+
+    config = {
         "command": _get_cmd_factory(executable),
         "timeout": 300,
         "new_browser_tab": True,
@@ -73,3 +86,9 @@ def setup_vscode() -> Dict[str, Any]:
             ),
         },
     }
+
+    # Add unix_socket config at top level if enabled
+    if _should_use_socket():
+        config["unix_socket"] = True
+
+    return config
