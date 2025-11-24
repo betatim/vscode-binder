@@ -19,7 +19,7 @@ jobs:
       PRE_COMMIT_USE_MICROMAMBA: 1
     steps:
       - name: Checkout branch
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Set up micromamba
         uses: mamba-org/setup-micromamba@add3a49764cedee8ee24e82dfde87f5bc2914462
       - name: Add micromamba to GITHUB_PATH
