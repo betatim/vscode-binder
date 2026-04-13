@@ -16,14 +16,14 @@ jobs:
       - name: Fetch full git history
         run: git fetch --prune --unshallow
       - name: Set up Conda env
-        uses: mamba-org/setup-micromamba@add3a49764cedee8ee24e82dfde87f5bc2914462
+        uses: mamba-org/setup-micromamba@d7c9bd84e824b79d2af72a2d4196c7f4300d3476
         with:
           environment-file: environment.yml
           cache-environment: true
       - shell: bash -el {0}
         run:
           python -m build
-      - uses: pypa/gh-action-pypi-publish@v1.13.0
+      - uses: pypa/gh-action-pypi-publish@v1.14.0
         if: github.event_name == 'release'
         with:
           user: __token__
