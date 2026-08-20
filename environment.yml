@@ -4,5 +4,5 @@ channels:
 dependencies:
   - numpy
   - python-build
-  - jupyter-server-proxy
-  - code-server >=3.2
+  - jupyter-server-proxy=3.2.1
+  - code-server=4.1.0
